@@ -1,3 +1,16 @@
+<div class="alert alert-success" *ngIf="message">
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	{{ message }}
+</div>
+<div class="alert alert-danger" *ngIf="error">
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	{{ error }}
+</div>
+
 <h4 class="page-header">Danh sách</h4>
 <div>
 	<a routerLink="/parents/create" class="btn btn-info"> <span class="glyphicon glyphicon-plus"></span> Thêm </a>
@@ -17,14 +30,14 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr *ngFor="let parent of parents; let i = index">
+					<tr *ngFor="let parent of parents; let i = index; trackBy: trackByParents">
 						<td>{{ i+1 }}</td>
 						<td>{{ parent.fatherName }}</td>
 						<td>{{ parent.motherName }}</td>
 						<td>{{ parent.phone_1 }}</td>
 						<td>
 							<a [routerLink]="['/parents/' + parent.id]" class="btn btn-info"> <span class="glyphicon glyphicon-pencil"></span> </a>
-							<a [routerLink]="['/parents/' + parent.id]" class="btn btn-danger"> <span class="glyphicon glyphicon-remove"></span> </a>
+							<a (click)="onShowModal(parent)" class="btn btn-danger"> <span class="glyphicon glyphicon-remove"></span> </a>
 						</td>
 					</tr>
 				</tbody>
@@ -44,3 +57,24 @@
 		</nav>
 	</div>	
 </div>
+
+<div class="modal fade" tabindex="-1" role="dialog" #deleteModal>
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Yêu cầu xác nhận</h4>
+			</div>
+			<div class="modal-body">
+				<p>Bạn có chắc chắn muốn xóa dữ liệu này không?</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+				<button type="button" class="btn btn-danger" (click)="onDelete()" >Xóa</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

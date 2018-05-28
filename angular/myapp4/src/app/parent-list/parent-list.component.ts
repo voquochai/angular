@@ -18,6 +18,8 @@ export class ParentListComponent implements OnInit {
 	message: string;
 	error: string;
 
+	@ViewChild('deleteModal') deleteModalElement: ElementRef;
+
 	constructor(
 		private _parentService: ParentService,
 		private _route: ActivatedRoute,
@@ -26,6 +28,31 @@ export class ParentListComponent implements OnInit {
 
 	ngOnInit() {
 		this.refreshList();
+	}
+
+	onShowModal(parent: Parent){
+		this.parent = parent;
+		jQuery(this.deleteModalElement.nativeElement).modal('show');
+	}
+
+	onDelete(){
+		this.message = null;
+		this.error = null;
+		this._parentService.deleteParent(this.parent.id).subscribe(res=>{
+			if(res.message){
+				this.message = res.message;
+				this.parents.splice(this.parents.indexOf(this.parent),1);
+				this.refreshList();
+			}
+			if(res.error){
+				this.error = res.error;
+			}
+		});
+		jQuery(this.deleteModalElement.nativeElement).modal('hide');
+	}
+
+	trackByParents(index: number, parent: Parent){
+		return parent.id;
 	}
 
 	refreshList(){
