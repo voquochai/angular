@@ -1,3 +1,50 @@
-<p>
-  parent-create works!
-</p>
+<div class="alert alert-danger" *ngIf="error">
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	{{ error }}
+</div>
+
+<h4 class="page-header">Thêm phụ huynh</h4>
+<div>
+	<a routerLink="/parents" class="btn btn-info"> <span class="glyphicon glyphicon-plus"></span> Quay lại </a>
+	<app-loading-indicator [loading]="loading"></app-loading-indicator>
+</div>
+<br/>
+<div class="panel panel-default">
+	<div class="panel-body">
+		<form>
+			<div class="form-group">
+				<label>Tên Cha</label>
+				<input type="text" name="fatherName" class="form-control" [(ngModel)]="parent && parent.fatherName" />
+			</div>
+			<div class="form-group">
+				<label>Tên Mẹ</label>
+				<input type="text" name="motherName" class="form-control" [(ngModel)]="parent && parent.motherName" />
+			</div>
+			<div class="form-group">
+				<label>Số điện thoại 1</label>
+				<input type="text" name="phone_1" class="form-control" [(ngModel)]="parent && parent.phone_1" />
+			</div>
+			<div class="form-group">
+				<label>Số điện thoại 2</label>
+				<input type="text" name="phone_2" class="form-control" [(ngModel)]="parent && parent.phone_2" />
+			</div>
+			<div class="form-group">
+				<label>Địa chỉ</label>
+				<input type="text" name="address" class="form-control" [(ngModel)]="parent && parent.address" />
+			</div>
+			<div class="form-group">
+				<label>Công việc</label>
+				<input type="text" name="job" class="form-control" [(ngModel)]="parent && parent.job" />
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary" (click)="onCreate()" > Lưu </button>
+				<button type="reset" class="btn btn-default"> Làm lại </button>
+			</div>
+		</form>
+	</div>
+</div>
+<div>
+	<a routerLink="/parents/create" class="btn btn-info"> <span class="glyphicon glyphicon-plus"></span> Thêm </a>
+</div>

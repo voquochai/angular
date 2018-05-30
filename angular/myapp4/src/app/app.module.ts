@@ -13,13 +13,16 @@ import { KidCreateComponent } from './kid-create/kid-create.component';
 import { KidDetailComponent } from './kid-detail/kid-detail.component';
 import { AttendanceListComponent } from './attendance-list/attendance-list.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { LoadingIndicatorComponent } from './loading-indicator/loading-indicator.component';
 
 import { ParentService } from './parent.service';
 import { KidService } from './kid.service';
 import { AttendanceService } from './attendance.service';
 import { DashboardService } from './dashboard.service';
+import { ToolService } from './tool.service';
 
 import { Config } from './app.config';
+
 
 const routes: Routes = [
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -43,7 +46,8 @@ const routes: Routes = [
         KidCreateComponent,
         KidDetailComponent,
         AttendanceListComponent,
-        DashboardComponent
+        DashboardComponent,
+        LoadingIndicatorComponent
     ],
     imports: [
         BrowserModule,
@@ -56,7 +60,8 @@ const routes: Routes = [
         ParentService,
         KidService,
         AttendanceService,
-        DashboardService
+        DashboardService,
+        ToolService
     ],
     bootstrap: [AppComponent]
 })

@@ -18,12 +18,16 @@ export class ParentListComponent implements OnInit {
 	message: string;
 	error: string;
 	currentPage: number;
+	loading: boolean = false;
+	
 
 	// Tìm kiếm
 
 	private timeoutId: any;
 	private newTerm: string;
 	private oldTerm: string;
+
+
 
 	@ViewChild('search') searchElement: ElementRef;
 	@ViewChild('deleteModal') deleteModalElement: ElementRef;
@@ -82,6 +86,7 @@ export class ParentListComponent implements OnInit {
 	refreshList(){
 		this.subscription != null ? this.subscription.unsubscribe() : null;
 		this.subscription = this._route.queryParamMap.switchMap((params: ParamMap)=>{
+			this.loading = true;
 			this.currentPage = +params.get('page') > 0 ? +params.get('page') : 1;
 			this.newTerm = this.searchElement.nativeElement.value || '';
 			if(this.newTerm != this.oldTerm){
@@ -89,17 +94,21 @@ export class ParentListComponent implements OnInit {
 			}
 			return this._parentService.getParents(this.currentPage,this.newTerm);
 		}).subscribe(res =>{
+			this.loading = false;
 			this.oldTerm = this.newTerm;
 			this.parents = res.data;
 			this.data = res;
 			this.pagination = this._parentService.renderPagination(this.data);
+
 		});
 	}
 
 	refreshListManually(){
+		this.loading = true;
 		this.subscriptionManually != null ? this.subscriptionManually.unsubscribe() : null;
 		this.subscriptionManually = this._parentService.getParents(this.currentPage || 1,this.newTerm)
 		.subscribe(res =>{
+			this.loading = false;
 			this.parents = res.data;
 			this.data = res;
 			this.pagination = this._parentService.renderPagination(this.data);

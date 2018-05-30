@@ -19,7 +19,6 @@ export class Parent{
 				this[prop] = parent[prop];
 			}
 		}
-		
 	}
 
 }
