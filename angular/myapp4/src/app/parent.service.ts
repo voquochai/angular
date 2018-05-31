@@ -89,8 +89,8 @@ export class ParentService {
 		return body || {};
 	}
 
-	private extractAllError(){
-
+	public extractAllError(errors: any){
+		return Object.keys(errors);
 	}
 
 	renderPagination(data: any, range: number = 3) {

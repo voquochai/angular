@@ -1,16 +1,17 @@
-<div class="alert alert-danger" *ngIf="error">
-	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-		<span aria-hidden="true">&times;</span>
-	</button>
-	{{ error }}
-</div>
-
 <h4 class="page-header">Thêm phụ huynh</h4>
 <div>
-	<a routerLink="/parents" class="btn btn-info"> <span class="glyphicon glyphicon-plus"></span> Quay lại </a>
+	<a routerLink="/parents" class="btn btn-info"> <span class="glyphicon glyphicon-arrow-left"></span> Quay lại </a>
 	<app-loading-indicator [loading]="loading"></app-loading-indicator>
 </div>
 <br/>
+<div class="alert alert-danger" *ngIf="errors">
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	<ul>
+		<li *ngFor="let key of errorKeys">{{ errors[key] }}</li>
+	</ul>
+</div>
 <div class="panel panel-default">
 	<div class="panel-body">
 		<form>

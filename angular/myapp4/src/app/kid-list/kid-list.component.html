@@ -1,3 +1,84 @@
-<p>
-  kid-list works!
-</p>
+<h4 class="page-header">Danh sách trẻ</h4>
+<div>
+	<a routerLink="/kids/create" class="btn btn-info"> <span class="glyphicon glyphicon-plus"></span> Thêm </a>
+	<a (click)="refreshListManually()" class="btn btn-default"> <span class="glyphicon glyphicon-refresh"></span> Tải lại </a>
+	<form class="form-inline" style="display: inline-block;">
+		<input type="text" class="form-control" placeholder="Tìm kiếm..." #search (keyup)="onSearch()" />
+	</form>
+	<app-loading-indicator [loading]="loading"></app-loading-indicator>
+</div>
+<br/>
+<div class="alert alert-success" *ngIf="message">
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	{{ message }}
+</div>
+<div class="alert alert-danger" *ngIf="error">
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	{{ error }}
+</div>
+<div class="panel panel-default">
+	<div class="panel-body">
+		<div class="table-responsive">
+			<table class="table">
+				<thead>
+					<tr>
+						<th> # </th>
+						<th> Name </th>
+						<th> Age </th>
+						<th> Monthly </th>
+						<th> Action </th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let kid of kids; let i = index; trackBy: trackByKids">
+						<td>{{ i+1 }}</td>
+						<td>{{ kid.name }}</td>
+						<td>{{ kid.age }}</td>
+						<td>{{ kid.monthly }}</td>
+						<td>
+							<a [routerLink]="['/kids/' + kid.id]" class="btn btn-info"> <span class="glyphicon glyphicon-pencil"></span> </a>
+							<a (click)="onShowModal(kid)" class="btn btn-danger"> <span class="glyphicon glyphicon-remove"></span> </a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<div>
+	<a routerLink="/kids/create" class="btn btn-info"> <span class="glyphicon glyphicon-plus"></span> Thêm </a>
+	<div class="pull-right" *ngIf="pagination && data && data.last_page > 1">
+		<nav aria-label="Page navigation">
+			<ul class="pagination" style="margin: 0px;">
+				<li [class.disabled]="data.current_page==1"><a routerLink="/kids" [queryParams]="{ page: 1 }" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+				<li *ngFor="let paging of pagination" [class.active]="paging.active"><a routerLink="/kids" [queryParams]="{ page: paging.page }" skipLocationChange >{{ paging.page }}</a></li>
+				<li [class.disabled]="data.current_page==data.last_page"><a routerLink="/kids" [queryParams]="{ page: data.last_page }" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+			</ul>
+		</nav>
+	</div>	
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" #deleteModal>
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Yêu cầu xác nhận</h4>
+			</div>
+			<div class="modal-body">
+				<p>Bạn có chắc chắn muốn xóa dữ liệu này không?</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+				<button type="button" class="btn btn-danger" (click)="onDelete()" >Xóa</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

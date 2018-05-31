@@ -1,4 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { ToolService } from '../tool.service';
 import { Parent, ParentService } from '../parent.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 declare let jQuery;
@@ -34,9 +35,9 @@ export class ParentListComponent implements OnInit {
 
 	// Giải phóng bộ nhớ
 	private subscription;
-	private subscriptionManually;
 
 	constructor(
+		private _toolService: ToolService,
 		private _parentService: ParentService,
 		private _route: ActivatedRoute,
 		private _router: Router
@@ -84,6 +85,7 @@ export class ParentListComponent implements OnInit {
 	}
 
 	refreshList(){
+		this.error = this._toolService.flashMessage || null;
 		this.subscription != null ? this.subscription.unsubscribe() : null;
 		this.subscription = this._route.queryParamMap.switchMap((params: ParamMap)=>{
 			this.loading = true;
@@ -105,13 +107,13 @@ export class ParentListComponent implements OnInit {
 
 	refreshListManually(){
 		this.loading = true;
-		this.subscriptionManually != null ? this.subscriptionManually.unsubscribe() : null;
-		this.subscriptionManually = this._parentService.getParents(this.currentPage || 1,this.newTerm)
+		let subscription = this._parentService.getParents(this.currentPage || 1,this.newTerm)
 		.subscribe(res =>{
 			this.loading = false;
 			this.parents = res.data;
 			this.data = res;
 			this.pagination = this._parentService.renderPagination(this.data);
+			subscription.unsubscribe();
 		});
 	}
 
