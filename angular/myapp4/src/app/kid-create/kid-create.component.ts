@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ToolService } from '../tool.service';
+import { Parent, ParentService } from '../parent.service';
 import { Kid, KidService } from '../kid.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 declare let jQuery;
@@ -11,6 +12,7 @@ declare let jQuery;
 })
 export class KidCreateComponent implements OnInit {
 
+	parents: Parent[] = [];
 	kid: Kid = new Kid();
 	errors: any;
 	errorKeys: any;
@@ -19,16 +21,26 @@ export class KidCreateComponent implements OnInit {
 
 	constructor(
 		private _toolService: ToolService,
+		private _parentService: ParentService,
 		private _kidService: KidService,
 		private _route: ActivatedRoute,
 		private _router: Router
 	) { }
 
 	ngOnInit() {
+		this.getParents();
 	}
 
 	ngOnDestroy(){
 		this.subscription != null ? this.subscription.unsubscribe() : null;
+	}
+
+	getParents(){
+		let subscription = this._parentService.getParents(0,null,true)
+		.subscribe(res =>{
+			this.parents = res;
+			subscription.unsubscribe();
+		});
 	}
 
 	onCreate(){

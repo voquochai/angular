@@ -1,3 +1,51 @@
-<p>
-  kid-detail works!
-</p>
+<h4 class="page-header">Sửa trẻ</h4>
+<div>
+	<a routerLink="/parents" class="btn btn-info"> <span class="glyphicon glyphicon-plus"></span> Quay lại </a>
+	<app-loading-indicator [loading]="loading"></app-loading-indicator>
+</div>
+<br/>
+<div class="alert alert-success" *ngIf="message">
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	{{ message }}
+</div>
+<div class="alert alert-danger" *ngIf="errors">
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	<ul>
+		<li *ngFor="let key of errorKeys">{{ errors[key] }}</li>
+	</ul>
+</div>
+<div class="panel panel-default">
+	<div class="panel-body">
+		<form>
+			<div class="form-group">
+				<label>Tên Trẻ</label>
+				<input type="text" name="name" class="form-control" [(ngModel)]="kid && kid.name" />
+			</div>
+			<div class="form-group">
+				<label>Số tuổi</label>
+				<input type="text" name="age" class="form-control" [(ngModel)]="kid && kid.age" />
+			</div>
+			<div class="form-group">
+				<label>Số tháng</label>
+				<input type="text" name="monthly" class="form-control" [(ngModel)]="kid && kid.monthly" />
+			</div>
+			<div class="form-group">
+				<label>Phụ huynh</label>
+				<select name="parent_id" class="form-control" [(ngModel)]="kid && kid.parent_id">
+					<option>Chọn phụ huynh</option>
+					<option [value]="parent.id" *ngFor="let parent of parents">{{ 'Ba: ' + parent.fatherName + ' - Mẹ: ' + parent.motherName }}</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary" (click)="onUpdate()" > Cập nhật </button>
+			</div>
+		</form>
+	</div>
+</div>
+<div>
+	<a routerLink="/parents/create" class="btn btn-info"> <span class="glyphicon glyphicon-plus"></span> Thêm </a>
+</div>

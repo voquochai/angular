@@ -1,3 +1,79 @@
-<p>
-  attendance-list works!
-</p>
+<h4 class="page-header">Danh sách điểm danh</h4>
+<div>
+	<form class="form-inline" style="display: inline-block;">
+		<input type="text" class="form-control" placeholder="Tìm kiếm..." #search (keyup)="onSearch()" />
+	</form>
+	<app-loading-indicator [loading]="loading"></app-loading-indicator>
+</div>
+<br/>
+<div class="alert alert-success" *ngIf="message">
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	{{ message }}
+</div>
+<div class="alert alert-danger" *ngIf="error">
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	{{ error }}
+</div>
+<div class="panel panel-default">
+	<div class="panel-body">
+		<div class="table-responsive">
+			<table class="table">
+				<thead>
+					<tr>
+						<th> # </th>
+						<th> Tên trẻ </th>
+						<th> Action </th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let kid of kids; let i = index; trackBy: trackByAttendances">
+						<td>{{ i+1 }}</td>
+						<td>{{ kid.name }}</td>
+						<td>
+							<a href="" class="btn btn-sm btn-primary">Nhận trẻ</a>
+							<a href="" class="btn btn-sm btn-success">Trả trẻ</a>
+							<a href="" class="btn btn-sm btn-danger">Nghỉ học</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<div>
+	<div class="pull-right" *ngIf="pagination && data && data.last_page > 1">
+		<nav aria-label="Page navigation">
+			<ul class="pagination" style="margin: 0px;">
+				<li [class.disabled]="data.current_page==1"><a routerLink="/attendances" [queryParams]="{ page: 1 }" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+				<li *ngFor="let paging of pagination" [class.active]="paging.active"><a routerLink="/attendances" [queryParams]="{ page: paging.page }" skipLocationChange >{{ paging.page }}</a></li>
+				<li [class.disabled]="data.current_page==data.last_page"><a routerLink="/attendances" [queryParams]="{ page: data.last_page }" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+			</ul>
+		</nav>
+	</div>	
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" #deleteModal>
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Yêu cầu xác nhận</h4>
+			</div>
+			<div class="modal-body">
+				<p>Bạn có chắc chắn muốn xóa dữ liệu này không?</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+				<button type="button" class="btn btn-danger" (click)="onDelete()" >Xóa</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

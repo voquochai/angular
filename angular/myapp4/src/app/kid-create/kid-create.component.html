@@ -14,30 +14,26 @@
 </div>
 <div class="panel panel-default">
 	<div class="panel-body">
+		{{ kid | json }}
 		<form>
 			<div class="form-group">
-				<label>Tên Cha</label>
-				<input type="text" name="fatherName" class="form-control" [(ngModel)]="kid && kid.fatherName" />
+				<label>Tên Trẻ</label>
+				<input type="text" name="name" class="form-control" [(ngModel)]="kid && kid.name" />
 			</div>
 			<div class="form-group">
-				<label>Tên Mẹ</label>
-				<input type="text" name="motherName" class="form-control" [(ngModel)]="kid && kid.motherName" />
+				<label>Số tuổi</label>
+				<input type="text" name="age" class="form-control" [(ngModel)]="kid && kid.age" />
 			</div>
 			<div class="form-group">
-				<label>Số điện thoại 1</label>
-				<input type="text" name="phone_1" class="form-control" [(ngModel)]="kid && kid.phone_1" />
+				<label>Số tháng</label>
+				<input type="text" name="monthly" class="form-control" [(ngModel)]="kid && kid.monthly" />
 			</div>
 			<div class="form-group">
-				<label>Số điện thoại 2</label>
-				<input type="text" name="phone_2" class="form-control" [(ngModel)]="kid && kid.phone_2" />
-			</div>
-			<div class="form-group">
-				<label>Địa chỉ</label>
-				<input type="text" name="address" class="form-control" [(ngModel)]="kid && kid.address" />
-			</div>
-			<div class="form-group">
-				<label>Công việc</label>
-				<input type="text" name="job" class="form-control" [(ngModel)]="kid && kid.job" />
+				<label>Phụ huynh</label>
+				<select name="parent_id" class="form-control" [(ngModel)]="kid && kid.parent_id">
+					<option>Chọn phụ huynh</option>
+					<option [value]="parent.id" *ngFor="let parent of parents">{{ 'Ba: ' + parent.fatherName + ' - Mẹ: ' + parent.motherName }}</option>
+				</select>
 			</div>
 			<div class="form-group">
 				<button type="submit" class="btn btn-primary" (click)="onCreate()" > Lưu </button>
