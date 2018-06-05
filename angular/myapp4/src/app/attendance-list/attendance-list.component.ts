@@ -27,8 +27,10 @@ export class AttendanceListComponent implements OnInit {
 	private timeoutId: any;
 	private newTerm: string;
 	private oldTerm: string;
+	private dateTerm: string;
 
 	@ViewChild('search') searchElement: ElementRef;
+	@ViewChild('searchByDate') searchByDateElement: ElementRef;
 
 	// Giải phóng bộ nhớ
 	private subscription;
@@ -40,9 +42,19 @@ export class AttendanceListComponent implements OnInit {
 		private _route: ActivatedRoute,
 		private _router: Router
 	) { }
-
 	ngOnInit() {
+		this.dataPickerInit();
 		this.refreshList();
+	}
+
+	dataPickerInit(){
+		jQuery(this.searchByDateElement.nativeElement).off('changeDate');
+		jQuery(this.searchByDateElement.nativeElement).datepicker({
+			format: "yyyy-mm-dd",
+			autoclose: true
+		}).on('changeDate', ()=>{
+			this.refreshList();
+		});
 	}
 
 	ngOnDestroy(){
@@ -60,6 +72,66 @@ export class AttendanceListComponent implements OnInit {
 		},200);
 	}
 
+	onStart(kid: Kid){
+		let data: any = {
+			kid_id : kid.id
+		}
+		this.loading = true;
+		this.message = null;
+		this.error = null;
+		let subscription = this._attendanceService.start(data).subscribe(res => {
+			this.loading = false;
+			if(res.message !=''){
+				this.message = res.message;
+				this.refreshList();
+			}
+			if(res.error !=''){
+				this.error = res.error;
+			}
+			subscription.unsubscribe();
+		});
+	}
+
+	onEnd(kid: Kid){
+		let data: any = {
+			kid_id : kid.id
+		}
+		this.loading = true;
+		this.message = null;
+		this.error = null;
+		let subscription = this._attendanceService.end(data).subscribe(res => {
+			this.loading = false;
+			if(res.message !=''){
+				this.message = res.message;
+				this.refreshList();
+			}
+			if(res.error !=''){
+				this.error = res.error;
+			}
+			subscription.unsubscribe();
+		});
+	}
+
+	onOff(kid: Kid){
+		let data: any = {
+			kid_id : kid.id
+		}
+		this.loading = true;
+		this.message = null;
+		this.error = null;
+		let subscription = this._attendanceService.off(data).subscribe(res => {
+			this.loading = false;
+			if(res.message !=''){
+				this.message = res.message;
+				this.refreshList();
+			}
+			if(res.error !=''){
+				this.error = res.error;
+			}
+			subscription.unsubscribe();
+		});
+	}
+
 	refreshList(){
 		this.error = this._toolService.flashMessage || null;
 		this.subscription != null ? this.subscription.unsubscribe() : null;
@@ -70,14 +142,14 @@ export class AttendanceListComponent implements OnInit {
 			if(this.newTerm != this.oldTerm){
 				this.currentPage = 1;
 			}
-			return this._attendanceService.getKids(this.currentPage,this.newTerm);
+			this.dateTerm = this.searchByDateElement.nativeElement.value || '';
+			return this._attendanceService.getKids(this.currentPage,this.newTerm,this.dateTerm);
 		}).subscribe(res =>{
 			this.loading = false;
 			this.oldTerm = this.newTerm;
 			this.kids = res.data;
 			this.data = res;
 			this.pagination = this._attendanceService.renderPagination(this.data);
-
 		});
 	}
 

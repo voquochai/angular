@@ -1,7 +1,9 @@
 <h4 class="page-header">Danh sách điểm danh</h4>
 <div>
+	<a (click)="refreshListManually()" class="btn btn-default"> <span class="glyphicon glyphicon-refresh"></span> Tải lại </a>
 	<form class="form-inline" style="display: inline-block;">
 		<input type="text" class="form-control" placeholder="Tìm kiếm..." #search (keyup)="onSearch()" />
+		<input type="text" class="form-control" placeholder="Tìm kiếm theo ngày tháng..." #searchByDate>
 	</form>
 	<app-loading-indicator [loading]="loading"></app-loading-indicator>
 </div>
@@ -27,17 +29,19 @@
 						<th> # </th>
 						<th> Tên trẻ </th>
 						<th> Action </th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr *ngFor="let kid of kids; let i = index; trackBy: trackByAttendances">
+					<tr *ngFor="let kid of kids; let i = index; trackBy: trackByKids" [class.danger]="kid.attendance && kid.attendance.type == 'off'" >
 						<td>{{ i+1 }}</td>
 						<td>{{ kid.name }}</td>
 						<td>
-							<a href="" class="btn btn-sm btn-primary">Nhận trẻ</a>
-							<a href="" class="btn btn-sm btn-success">Trả trẻ</a>
-							<a href="" class="btn btn-sm btn-danger">Nghỉ học</a>
+							<a [class.disabled]="kid.attendance && kid.attendance.start != null" (click)="onStart(kid)" class="btn btn-sm btn-primary">Nhận trẻ</a>
+							<a [class.disabled]="kid.attendance && kid.attendance.end != null" (click)="onEnd(kid)" class="btn btn-sm btn-success">Trả trẻ</a>
+							<a [class.disabled]="kid.attendance && kid.attendance.type == 'off'" (click)="onOff(kid)" class="btn btn-sm btn-danger">Nghỉ học</a>
 						</td>
+						<td> {{ kid.attendance | json }} </td>
 					</tr>
 				</tbody>
 			</table>
