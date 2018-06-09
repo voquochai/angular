@@ -47,7 +47,6 @@ class DashboardController extends Controller
         $data['sumMonthly'] = floor($data['sumMonthly']);
         $data['sumAllRevenues'] = floor($data['sumAllRevenues']);
         $data['realIncome'] = floor($data['realIncome']);
-        $data['kids'] = $kids->toArray();
 
         return response()->json($data);
     }

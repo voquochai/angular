@@ -51,7 +51,8 @@ export class AttendanceListComponent implements OnInit {
 		jQuery(this.searchByDateElement.nativeElement).off('changeDate');
 		jQuery(this.searchByDateElement.nativeElement).datepicker({
 			format: "yyyy-mm-dd",
-			autoclose: true
+			autoclose: true,
+			todayHighlight: true
 		}).on('changeDate', ()=>{
 			this.refreshList();
 		});
