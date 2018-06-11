@@ -49,5 +49,12 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function() {
     Route::get('/attendances/{id}', 'AttendanceController@show')->name('attendance.show');
     Route::delete('/attendances/{id}', 'AttendanceController@delete')->name('attendance.delete');
 
+
+    Route::get('/products', 'ProductController@index')->name('product.index');
+    Route::post('/products', 'ProductController@store')->name('product.store');
+    Route::put('/products/{id}', 'ProductController@update')->name('product.update');
+    Route::get('/products/{id}', 'ProductController@show')->name('product.show');
+    Route::delete('/products/{id}', 'ProductController@delete')->name('product.delete');
+
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard.index');
 });

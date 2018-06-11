@@ -75,3 +75,13 @@ $factory->define(App\Attendance::class, function (Faker\Generator $faker) {
         'date' => $date
     ];
 });
+
+$factory->define(App\Product::class, function (Faker\Generator $faker) {
+    return [
+        'code' => $faker->randomNumber,
+        'name' => $faker->name,
+        'regular_price' => 200000,
+        'sale_price' => 150000,
+        'original_price' => 75000,
+    ];
+});

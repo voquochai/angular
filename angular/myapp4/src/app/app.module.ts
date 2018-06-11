@@ -5,47 +5,38 @@ import { FormsModule }   from '@angular/forms';
 import { HttpModule }    from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { ParentListComponent } from './parent-list/parent-list.component';
-import { ParentCreateComponent } from './parent-create/parent-create.component';
-import { ParentDetailComponent } from './parent-detail/parent-detail.component';
-import { KidListComponent } from './kid-list/kid-list.component';
-import { KidCreateComponent } from './kid-create/kid-create.component';
-import { KidDetailComponent } from './kid-detail/kid-detail.component';
-import { AttendanceListComponent } from './attendance-list/attendance-list.component';
+
+import { ProductListComponent } from './product-list/product-list.component';
+import { ProductCreateComponent } from './product-create/product-create.component';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
+
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoadingIndicatorComponent } from './loading-indicator/loading-indicator.component';
 
-import { ParentService } from './parent.service';
-import { KidService } from './kid.service';
-import { AttendanceService } from './attendance.service';
+import { ProductService } from './product.service';
+
 import { DashboardService } from './dashboard.service';
 import { ToolService } from './tool.service';
-
 import { Config } from './app.config';
+
 
 
 const routes: Routes = [
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
     { path: 'dashboard',  component: DashboardComponent },
-    { path: 'parents',     component: ParentListComponent },
-    { path: 'parents/create', component: ParentCreateComponent },  
-    { path: 'parents/:id', component: ParentDetailComponent },
-    { path: 'kids',     component: KidListComponent },
-    { path: 'kids/create', component: KidCreateComponent },  
-    { path: 'kids/:id', component: KidDetailComponent },      
-    { path: 'attendances',     component: AttendanceListComponent },
+    { path: 'products',     component: ProductListComponent },
+    { path: 'products/create', component: ProductCreateComponent },  
+    { path: 'products/:id', component: ProductDetailComponent },
 ];
 
 @NgModule({
     declarations: [
         AppComponent,
-        ParentListComponent,
-        ParentCreateComponent,
-        ParentDetailComponent,
-        KidListComponent,
-        KidCreateComponent,
-        KidDetailComponent,
-        AttendanceListComponent,
+        
+        ProductListComponent,
+        ProductCreateComponent,
+        ProductDetailComponent,
+
         DashboardComponent,
         LoadingIndicatorComponent
     ],
@@ -57,9 +48,7 @@ const routes: Routes = [
     ],
     providers: [
         Config,
-        ParentService,
-        KidService,
-        AttendanceService,
+        ProductService,
         DashboardService,
         ToolService
     ],
