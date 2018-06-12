@@ -965,3 +965,6 @@ Stack trace:
 #46 G:\xampp\htdocs\angular\nhatre\vendor\laravel\framework\src\Illuminate\Foundation\Http\Kernel.php(116): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter(Object(Illuminate\Http\Request))
 #47 G:\xampp\htdocs\angular\nhatre\public\index.php(54): Illuminate\Foundation\Http\Kernel->handle(Object(Illuminate\Http\Request))
 #48 {main}  
+[2018-06-12 02:39:05] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'App\Http\Controllers\Validator' not found' in G:\xampp\htdocs\angular\nhatre\app\Http\Controllers\ProductController.php:49
+Stack trace:
+#0 {main}  

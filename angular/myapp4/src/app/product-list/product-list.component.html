@@ -38,10 +38,10 @@
 						<td>{{ i+1 }}</td>
 						<td>{{ product.code }}</td>
 						<td>{{ product.name }}</td>
-						<td>{{ product.regular_price }}</td>
+						<td>{{ product.regular_price | currency:'VND':'vn' }}</td>
 						<td>
-							<a [routerLink]="['/products/' + product.id]" class="btn btn-info"> <span class="glyphicon glyphicon-pencil"></span> </a>
-							<a (click)="onShowModal(product)" class="btn btn-danger"> <span class="glyphicon glyphicon-remove"></span> </a>
+							<a [routerLink]="['/products/' + product.id]" class="btn btn-sm btn-info"> <span class="glyphicon glyphicon-pencil"></span> </a>
+							<a (click)="onShowModal(product)" class="btn btn-sm btn-danger"> <span class="glyphicon glyphicon-remove"></span> </a>
 						</td>
 					</tr>
 				</tbody>

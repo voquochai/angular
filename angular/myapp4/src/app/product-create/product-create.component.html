@@ -1,3 +1,50 @@
-<p>
-  product-create works!
-</p>
+<h4 class="page-header">Thêm sản phẩm</h4>
+<div>
+	<a routerLink="/products" class="btn btn-info"> <span class="glyphicon glyphicon-arrow-left"></span> Quay lại </a>
+	<app-loading-indicator [loading]="loading"></app-loading-indicator>
+</div>
+<br/>
+<div class="alert alert-danger" *ngIf="errors">
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	<ul>
+		<li *ngFor="let key of errorKeys">{{ errors[key] }}</li>
+	</ul>
+</div>
+<div class="panel panel-default">
+	<div class="panel-body">
+		<form>
+			<div class="form-group">
+				<label>Tên sản phẩm</label>
+				<input type="text" name="name" class="form-control" [(ngModel)]="product && product.name" />
+			</div>
+			<div class="form-group">
+				<label>Mã sản phẩm</label>
+				<input type="text" name="code" class="form-control" [(ngModel)]="product && product.code" />
+			</div>
+			<div class="form-group">
+				<label>Giá gốc</label>
+				<input type="text" name="original_price" class="form-control" [(ngModel)]="product && product.original_price" />
+				<span class="help-block">{{ product.original_price | currency:'VND':'vn' }}</span>
+			</div>
+			<div class="form-group">
+				<label>Giá bán</label>
+				<input type="text" name="regular_price" class="form-control" [(ngModel)]="product && product.regular_price" />
+				<span class="help-block">{{ product.regular_price | currency:'VND':'vn' }}</span>
+			</div>
+			<div class="form-group">
+				<label>Giá khuyến mãi</label>
+				<input type="text" name="sale_price" class="form-control" [(ngModel)]="product && product.sale_price" />
+				<span class="help-block">{{ product.sale_price | currency:'VND':'vn' }}</span>
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary" (click)="onCreate()" > Lưu </button>
+				<button type="reset" class="btn btn-default"> Làm lại </button>
+			</div>
+		</form>
+	</div>
+</div>
+<div>
+	<a routerLink="/products/create" class="btn btn-info"> <span class="glyphicon glyphicon-plus"></span> Thêm </a>
+</div>
